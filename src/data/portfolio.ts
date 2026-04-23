@@ -2,104 +2,122 @@ import type { Demo, BlogPost, Skill } from '../types';
 
 export const demos: Demo[] = [
   {
-    id: 'rag-chatbot',
-    title: 'RAG 智能问答系统',
-    titleEn: 'RAG Knowledge Q&A',
-    description: '基于检索增强生成的 LLM 问答系统，支持多文档解析、智能召回、答案生成全流程。集成了 llm-action 知识库，覆盖 LLM 训练、推理、部署等全栈知识。',
-    tags: ['RAG', 'LangChain', 'Milvus', 'FastAPI', 'Vue'],
+    id: 'knowledge-base',
+    title: '知识库问答系统',
+    titleEn: 'Knowledge Base Q&A',
+    description: '基于 RAG 的生产级问答系统，支持多格式文档解析、智能召回、答案溯源。集成 llm-action 全栈知识库，覆盖 LLM 训练/推理/部署全流程。',
+    tags: ['LangChain', 'ChromaDB', 'FastAPI', 'BGE Embedding', 'HyDE'],
     status: 'live',
-    code: `// 核心 RAG 检索逻辑
-const retrieved = await vectorStore.similaritySearch(query, k=5);
-const context = retrieved.map(d => d.pageContent).join('\\n');
+    code: `# 核心检索逻辑
+query_emb = embedding_model.encode(query)
+docs = vector_store.similarity_search(query_emb, k=5)
 
-const prompt = \`基于以下上下文回答问题：\\n
-问题：\${query}\\n
-上下文：\${context}\\n\\n
-请给出准确、详细的回答。\`;
+# HyDE: 先生成假设答案再召回
+hypo_doc = llm.generate(f"假设回答: {query}")
+hypo_emb = embedding_model.encode(hypo_doc)
+docs = vector_store.similarity_search(hypo_emb, k=10)
 
-const response = await llm.invoke(prompt);`
+# Context compression + rerank
+compressed = llmlingua.compress_docs(docs, query)
+ranked = cohere.rerank(query, compressed, top_n=3)`
   },
   {
     id: 'agent-workflow',
-    title: '多 Agent 协作系统',
+    title: '多 Agent 协作平台',
     titleEn: 'Multi-Agent Orchestration',
-    description: '基于 CrewAI 架构的多 Agent 协作系统，包含规划Agent、执行Agent、审核Agent，通过结构化通信协议实现复杂任务的自动分解与执行。',
-    tags: ['CrewAI', 'LangGraph', 'Agent', 'Python'],
+    description: '基于 LangGraph 的多 Agent 系统，包含规划、执行、审核三个角色，通过状态图实现复杂任务的自动分解与执行。集成 MCP 协议支持外部工具调用。',
+    tags: ['LangGraph', 'MCP', 'CrewAI', 'React', 'Tool-Calling'],
     status: 'live',
   },
   {
-    id: 'fine-tuning',
-    title: 'LLM 微调训练平台',
-    titleEn: 'LLM Fine-tuning Platform',
-    description: '一站式模型微调平台，支持 LoRA / QLoRA / Full-tuning 三种模式，提供分布式训练、梯度监控、模型评估全流程 UI。',
-    tags: ['LLaMA-Factory', 'DeepSpeed', 'LoRA', 'MLflow'],
-    status: 'coming',
+    id: 'structured-extraction',
+    title: '结构化数据抽取',
+    titleEn: 'Structured Data Extraction',
+    description: '将非结构化文档（PDF/HTML/图片）可靠地转换为 Pydantic 模型输出，支持 JSON Schema 校验、批量异步处理、精度/召回率指标监控。',
+    tags: ['Pydantic', 'FastAPI', 'asyncio', 'OpenAI', 'PDF解析'],
+    status: 'live',
   },
   {
-    id: 'eval-dashboard',
-    title: 'LLM 评测仪表盘',
-    titleEn: 'LLM Evaluation Dashboard',
-    description: '支持 RAGAS / G-Eval / LLM-as-Judge 多种评测方案，可视化模型在准确率、忠诚度、相关性等维度上的表现，自动生成评测报告。',
-    tags: ['RAGAS', 'LangSmith', 'Grafana', 'Python'],
-    status: 'concept',
+    id: 'eval-pipeline',
+    title: 'LLM 评测流水线',
+    titleEn: 'LLM Evaluation Pipeline',
+    description: '基于 DeepEval 的自动化评测系统，覆盖 RAGAS 指标（Context Precision/Recall/Faithfulness）、G-Eval、LLM-as-Judge，支持 CI/CD 集成和历史指标追踪。',
+    tags: ['DeepEval', 'RAGAS', 'G-Eval', 'GitHub Actions', 'LangSmith'],
+    status: 'live',
+  },
+  {
+    id: 'vllm-optimization',
+    title: 'vLLM 推理优化',
+    titleEn: 'vLLM Inference Optimization',
+    description: '生产环境 vLLM 部署实战：PagedAttention、Continuous Batching、Tensor Parallelism、Speculative Decoding，延迟从 800ms 降至 120ms，吞吐量提升 5x。',
+    tags: ['vLLM', 'CUDA', 'TensorRT', 'FP8 量化', 'SLoRA'],
+    status: 'live',
   },
 ];
 
 export const blogPosts: BlogPost[] = [
   {
-    id: 'rag-deep-dive',
-    title: '从 0 到 1 构建生产级 RAG 系统',
-    excerpt: 'RAG 看起来简单，但想把召回率做到 90%+、延迟压到 200ms 以内、还要支持千万级文档库，这里面至少有 20 个坑要踩。这篇复盘把整个过程讲透。',
-    date: '2026-03-15',
-    tags: ['RAG', 'FastAPI', 'Milvus', 'LangChain'],
-    readTime: '18 min',
-  },
-  {
-    id: 'multi-agent',
-    title: '多 Agent 系统设计：任务分解与通信协议',
-    excerpt: '当一个 Agent 处理不了复杂任务时，如何设计多 Agent 的协作框架？本文从任务树分解、共享记忆、结果汇总三个维度给出工程级方案。',
-    date: '2026-02-28',
-    tags: ['Agent', 'CrewAI', 'LangGraph', '架构设计'],
+    id: 'rag-chunking',
+    title: 'RAG 召回率从 62% 到 91%：我踩过的 20 个坑',
+    excerpt: 'Embedding 模型选错、Chunk Size 不合理、Lost in the Middle、Query Expansion 过度……这20个问题每个都让召回率下降5-10%。这篇文章把完整的踩坑路径和解决方案整理出来。',
+    date: '2026-03-10',
+    tags: ['RAG', 'Embedding', '召回优化', 'Milvus'],
     readTime: '22 min',
   },
   {
-    id: 'llm-eval',
-    title: 'LLM 评测完全指南：RAGAS 在生产环境中的实战经验',
-    excerpt: '评测是 LLM 应用闭环的关键。用 RAGAS 跑完 500+ 组实验后，我总结出了评测设计、指标选择、结果分析的完整方法论。',
-    date: '2026-01-20',
-    tags: ['评测', 'RAGAS', 'G-Eval', 'LangSmith'],
-    readTime: '15 min',
+    id: 'llm-eval-matters',
+    title: '为什么 LLM 评测比模型本身还难',
+    excerpt: '用 RAGAS 跑了500+组实验后，我意识到：评测设计本身就是一个研究问题。Context Faithfulness 的定义在学术界都有争议。本文分享我对"什么才算好评测"的理解。',
+    date: '2026-02-18',
+    tags: ['评测', 'RAGAS', 'G-Eval', 'LLM-as-Judge'],
+    readTime: '18 min',
+  },
+  {
+    id: 'agent-architecture',
+    title: '从 ReAct 到 LangGraph：多 Agent 系统的架构演进',
+    excerpt: 'ReAct → Plan-and-Execute → Acting → Supervisor 模式……为什么我最终选择了状态机模型？每种架构的适用场景是什么？设计 Agent 系统时最难的不是技术选型，是忍住不用最复杂方案的冲动。',
+    date: '2026-01-28',
+    tags: ['Agent', 'LangGraph', '架构设计', 'MCP'],
+    readTime: '25 min',
+  },
+  {
+    id: 'from-sw-to-llm',
+    title: '从传统工程到 LLM 应用：思维模式需要转变的三件事',
+    excerpt: '确定性 → 概率性、单元测试 → 分布测试、本地运行 → 延迟与成本。这三件事是我在 LLM 应用开发中感受到的最深刻的思维转变，理解它们比学任何框架都重要。',
+    date: '2025-12-15',
+    tags: ['方法论', '工程思维', 'LLM应用'],
+    readTime: '12 min',
   },
 ];
 
 export const skills: Skill[] = [
   {
-    category: '🧠 LLM 应用开发',
-    items: ['LangChain / LangGraph', 'RAG 系统设计', 'CrewAI / AutoGen', '向量数据库 (Milvus/Pinecone)', 'LLM API (OpenAI / Claude / Qwen)'],
+    category: '🧠 LLM 应用',
+    items: ['LangChain / LangGraph', 'RAG 系统设计（召回>90%）', 'MCP 协议与工具集成', 'CrewAI / AutoGen', '向量数据库（Milvus / Chroma）'],
   },
   {
     category: '🔧 模型训练与微调',
-    items: ['LLaMA-Factory', 'LoRA / QLoRA / Ptuning', 'DeepSpeed ZeRO', '分布式训练', 'MLflow 实验管理'],
+    items: ['LLaMA-Factory / Axoltl', 'LoRA / QLoRA / SLoRA', 'DeepSpeed ZeRO-3', 'MLflow 实验追踪', '分布式训练（多机多卡）'],
   },
   {
-    category: '⚡ LLM 推理优化',
-    items: ['vLLM / TGI 部署', 'Flash Attention', 'INT8 / FP8 量化', 'Batching / Prefill-Decode 分离', 'CUDA 优化基础'],
+    category: '⚡ 推理与部署',
+    items: ['vLLM / TGI 生产部署', 'Flash Attention / PagedAttention', 'INT8 / FP8 / GPTQ 量化', 'Continuous Batching', 'Tensor Parallelism'],
   },
   {
     category: '📊 评测与可观测性',
-    items: ['RAGAS 评测', 'G-Eval / LLM-as-Judge', 'LangSmith', 'Prometheus + Grafana', 'OpenTelemetry 链路追踪'],
+    items: ['DeepEval / RAGAS 评测', 'G-Eval / LLM-as-Judge', 'LangSmith / OpenTelemetry', 'Prometheus + Grafana', 'CI/CD Quality Gates'],
   },
   {
-    category: '🛠️ 工程基础设施',
-    items: ['FastAPI / Gradio', 'Docker / K8s', 'Redis / PostgreSQL', 'GitHub Actions CI/CD', 'Cloudflare AI Gateway'],
+    category: '🛠 工程基础设施',
+    items: ['FastAPI + uvicorn + Docker', 'GitHub Actions CI/CD', 'Redis / PostgreSQL', 'Cloudflare AI Gateway', 'Kubernetes 基础'],
   },
 ];
 
 export const timeline = [
-  { period: '2024.Q1', event: '从零构建首个 RAG 问答机器人' },
-  { period: '2024.Q2', event: '上线多 Agent 协作平台，服务 500+ 用户' },
-  { period: '2024.Q3', event: '完成 Qwen-7B/14B 全量微调，PPL 下降 23%' },
-  { period: '2024.Q4', event: '生产环境引入 RAGAS 评测系统，召回率提升至 91%' },
-  { period: '2025.Q1', event: '基于 llm-action 构建个人 LLM 知识库 Agent' },
-  { period: '2025.Q2', event: '开源贡献：优化 LangChain RAG 模板性能 40%' },
+  { period: '2024.Q1', event: '搭建首个 RAG 问答系统，开始系统性学习 LLM' },
+  { period: '2024.Q2', event: '上线多 Agent 协作平台，探索 Agent 架构' },
+  { period: '2024.Q3', event: '完成 Qwen-7B/14B 全量+LoRA 微调，PPL 下降 23%' },
+  { period: '2024.Q4', event: '引入 RAGAS 评测体系，召回率提升至 91%，延迟降至 180ms' },
+  { period: '2025.Q1', event: '生产环境部署 vLLM，吞吐量提升 5x，QPS 从 20 升至 120' },
+  { period: '2025.Q2', event: '集成 MCP 协议，构建工具 Agent，支持外部 API 调用' },
 ];
