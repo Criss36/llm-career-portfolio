@@ -21,7 +21,6 @@ npm run build   # Production build
 
 - Frontend: React 18 + TypeScript + Vite + TailwindCSS
 - Backend concepts: LangChain, CrewAI, RAG, Multi-Agent
-- Knowledge base: liguodongiot/llm-action
 
 ## Key Principles
 

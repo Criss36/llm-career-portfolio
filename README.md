@@ -2,9 +2,7 @@
 
 > 你好！我是一名专注于 **LLM 应用开发** 的工程师。这个仓库展示了我在中文大模型（RAG 系统、多 Agent 架构、模型微调、推理优化）领域的实战项目。
 >
-> 🌐 **在线演示**: https://5pobknu2iqlr.space.minimaxi.com
-> · 📂 **源代码**: 本仓库
-> · 📚 **知识库**: 基于 [liguodongiot/llm-action](https://github.com/liguodongiot/llm-action) 构建
+> 📂 **源代码**: 本仓库
 
 ---
 
@@ -12,7 +10,7 @@
 
 - 🔭 专注于中文 LLM 应用、RAG 系统、多 Agent 协作、模型微调与推理优化
 - 🏗️ 交付过 10+ 生产级 AI 项目，覆盖 10,000+ 用户
-- 📖 持续沉淀 LLM 工程方法论，基于 [llm-action](https://github.com/liguodongiot/llm-action) 知识库
+- 📖 持续沉淀 LLM 工程方法论
 - 🧠 对标 [Awesome-Chinese-LLM](https://github.com/HqWu-HITCS/Awesome-Chinese-LLM)，深入研究中文大模型生态
 - 💼 熟悉 ChatGLM、Qwen、Yi、DeepSeek 等主流中文底座模型
 
@@ -168,4 +166,4 @@ PagedAttention + Continuous Batching + Tensor Parallelism，QPS 从 20 提升到
 
 ---
 
-> 💡 这个项目基于 [liguodongiot/llm-action](https://github.com/liguodongiot/llm-action) 全栈知识库构建，参考 [Awesome-Chinese-LLM](https://github.com/HqWu-HITCS/Awesome-Chinese-LLM) 整理中文 LLM 模型生态，遵循其 MIT License。
+> 💡 这个项目参考 [Awesome-Chinese-LLM](https://github.com/HqWu-HITCS/Awesome-Chinese-LLM) 整理中文 LLM 模型生态，遵循其 MIT License。
