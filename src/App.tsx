@@ -1,11 +1,13 @@
 import Nav from './components/Nav';
 import Hero from './components/Hero';
 import Projects from './components/Projects';
+import Models from './components/Models';
+import Frameworks from './components/Frameworks';
 import Writing from './components/Writing';
 import Stack from './components/Stack';
 import Timeline from './components/Timeline';
 import Footer from './components/Footer';
-import { demos, blogPosts, skills, timeline } from './data/portfolio';
+import { demos, blogPosts, skills, timeline, models, frameworks, evaluations } from './data/portfolio';
 
 export default function App() {
   return (
@@ -25,6 +27,8 @@ export default function App() {
       <main id="main">
         <Hero />
         <Projects list={demos} />
+        <Models list={models} />
+        <Frameworks frameworks={frameworks} evaluations={evaluations} />
         <Writing list={blogPosts} />
         <Stack list={skills} />
         <Timeline list={timeline} />

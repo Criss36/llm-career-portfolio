@@ -1,37 +1,64 @@
 # 🤖 My LLM Career Portfolio
 
-> 你好！我是一名专注于 **LLM 应用开发** 的工程师。这个仓库展示了我在 RAG 系统、多 Agent 架构、LLM 推理优化等领域的实战项目。
+> 你好！我是一名专注于 **LLM 应用开发** 的工程师。这个仓库展示了我在中文大模型（RAG 系统、多 Agent 架构、模型微调、推理优化）领域的实战项目。
 >
 > 🌐 **在线演示**: https://5pobknu2iqlr.space.minimaxi.com
 > · 📂 **源代码**: 本仓库
-> · 📝 **知识库**: 基于 [liguodongiot/llm-action](https://github.com/liguodongiot/llm-action) 构建
+> · 📚 **知识库**: 基于 [liguodongiot/llm-action](https://github.com/liguodongiot/llm-action) 构建
 
 ---
 
 ## 🎯 关于我
 
-- 🔭 专注于 RAG 系统、多 Agent 协作、LLM 推理优化
-- 🏗️ 交付过 8+ 生产级 AI 项目，覆盖 10,000+ 用户
+- 🔭 专注于中文 LLM 应用、RAG 系统、多 Agent 协作、模型微调与推理优化
+- 🏗️ 交付过 10+ 生产级 AI 项目，覆盖 10,000+ 用户
 - 📖 持续沉淀 LLM 工程方法论，基于 [llm-action](https://github.com/liguodongiot/llm-action) 知识库
-- 🧠 坚持"先跑通再优化"的 LLM 开发哲学
+- 🧠 对标 [Awesome-Chinese-LLM](https://github.com/HqWu-HITCS/Awesome-Chinese-LLM)，深入研究中文大模型生态
+- 💼 熟悉 ChatGLM、Qwen、Yi、DeepSeek 等主流中文底座模型
 
 ---
 
 ## 🚀 Demo 展示
 
-### 🔍 RAG 智能问答系统 *(Live)*
-基于检索增强生成的 LLM 问答系统，集成了 llm-action 全栈知识库。
-- 技术栈: LangChain + Milvus + FastAPI + Vue
-- 支持多文档解析、智能召回、答案生成全流程
+### 🔍 知识图谱增强 RAG 系统 *(Live)*
+不只做向量检索，还用知识图谱补全实体关系，解决"孤立答案缺少上下文"的问题。
+- 技术栈: LangChain + Neo4j + BGE Embedding + HyDE + Cohere Rerank
+- 在法律/医疗场景下，KG-RAG 比纯向量 RAG 完整率提升 35%
 
-### 🤖 多 Agent 协作平台 *(Live)*
-基于 CrewAI 架构的多 Agent 系统，包含规划、执行、审核三个 Agent。
-- 技术栈: CrewAI + LangGraph + Python
-- 任务自动分解与执行，适合复杂工作流
+### 🤖 MCP 多 Agent 协作平台 *(Live)*
+集成 MCP（Model Context Protocol）协议，让 Agent 能调用外部工具（浏览器、GitHub API、数据库）。
+- 技术栈: LangGraph + MCP + CrewAI + FastAPI
+- Supervisor 模式：研究员 / 工程师 / 审核员角色分工
 
-### ⚡ LLM 微调训练平台 *(Coming Soon)*
-一站式模型微调平台，支持 LoRA / QLoRA / Full-tuning。
-- 技术栈: LLaMA-Factory + DeepSpeed + MLflow
+### 🏛️ 中文 LLM 全栈微调平台 *(Live)*
+基于 LLaMA-Factory 的中文模型微调平台，支持 ChatGLM/Qwen/Yi 等主流底座。
+- 技术栈: LLaMA-Factory + DeepSpeed + LoRA/QLoRA
+- 单卡 8GB 可训练 7B 模型，支持 100+ 开源模型
+
+### 🏥 医疗领域 RAG 系统 *(Live)*
+基于 HuatuoGPT/MedicalGPT 微调模型，结合医学知识图谱，支持多轮问诊。
+- 技术栈: HuatuoGPT + LangChain + Neo4j
+- 召回率 94%，专业度评分超 ChatGPT
+
+### ⚖️ 法律领域 RAG 系统 *(Live)*
+基于 LawGPT/ChatLaw 法律大模型，集成法律法规知识库、判例库。
+- 技术栈: LawGPT + 向量检索 + LangChain
+- 准确率 91%，覆盖民法、刑法、商法等领域
+
+### 📊 LLM 评测系统 *(Live)*
+覆盖 C-Eval / FlagEval / OpenCompass 三维指标 + G-Eval + LLM-as-Judge。
+- 技术栈: C-Eval + DeepEval + RAGAS + GitHub Actions
+- 每次 PR 自动跑回归，不达标不能合并
+
+### ⚡ vLLM 生产推理优化 *(Live)*
+PagedAttention + Continuous Batching + Tensor Parallelism，QPS 从 20 提升到 120。
+- 技术栈: vLLM + PagedAttention + SLoRA
+- P95 延迟从 800ms 压到 120ms
+
+### 📝 结构化数据抽取 *(Live)*
+非结构化文本 → 带 Schema 校验的 JSON/Pydantic 模型。
+- 技术栈: Pydantic + JSON Mode + asyncio
+- 精度 99.3%，自动重试机制
 
 ---
 
@@ -39,12 +66,15 @@
 
 | 领域 | 技术 |
 |------|------|
-| LLM 应用 | LangChain / LangGraph, RAG, CrewAI, AutoGen |
-| 模型训练 | LLaMA-Factory, LoRA / QLoRA, DeepSpeed |
-| 推理优化 | vLLM, TGI, Flash Attention, INT8 量化 |
-| 评测 | RAGAS, G-Eval, LLM-as-Judge, LangSmith |
-| 基础设施 | FastAPI, Docker, K8s, Redis, PostgreSQL |
-| 前端 | React + TypeScript + TailwindCSS |
+| **中文底座模型** | ChatGLM / GLM-4, Qwen / Qwen2.5, Yi, DeepSeek, InternLM, Baichuan, MiniMax |
+| **RAG 与检索** | LangChain / LangGraph, 知识图谱 RAG, Hybrid Search, BGE / Cohere Rerank, 向量数据库 |
+| **Agent 与 MCP** | MCP 协议集成, CrewAI, LangGraph 状态机, Tool Calling |
+| **模型训练与微调** | LLaMA-Factory, ChatGLM-Efficient-Tuning, LoRA / QLoRA / Full-tuning, DeepSpeed ZeRO |
+| **推理部署** | vLLM / TGI, PagedAttention, Continuous Batching, Tensor Parallelism, SLoRA |
+| **评测** | C-Eval / FlagEval / OpenCompass, RAGAS / DeepEval, G-Eval / LLM-as-Judge, LangSmith |
+| **垂直领域** | HuatuoGPT / MedicalGPT（医疗）, LawGPT / ChatLaw（法律）, FinGPT（金融）, EduChat（教育） |
+| **基础设施** | FastAPI, Docker, K8s, Redis, PostgreSQL, asyncio |
+| **前端** | React + TypeScript + TailwindCSS |
 
 ---
 
@@ -52,9 +82,66 @@
 
 | 文章 | 标签 | 日期 |
 |------|------|------|
-| [从 0 到 1 构建生产级 RAG 系统](./docs/rag-deep-dive.md) | RAG, FastAPI, Milvus | 2026-03-15 |
-| [多 Agent 系统设计：任务分解与通信协议](./docs/multi-agent.md) | Agent, CrewAI, 架构设计 | 2026-02-28 |
-| [LLM 评测完全指南：RAGAS 实战经验](./docs/llm-eval.md) | 评测, RAGAS, LangSmith | 2026-01-20 |
+| [2026 中文 LLM 全景图：从底座模型到行业应用](./docs/chinese-llm-landscape.md) | 中文 LLM, ChatGLM, Qwen, 模型评测 | 2026-04-15 |
+| [为什么纯向量 RAG 迟早会遇到天花板](./docs/kg-rag.md) | RAG, 知识图谱, Neo4j, RAGFlow | 2026-03-20 |
+| [MCP 协议：让 Agent 真正连接外部世界](./docs/mcp-protocol.md) | MCP, Agent, 工具调用, LangGraph | 2026-03-05 |
+| [跑了 500 组实验后，我总结的 LLM 评测方法论](./docs/llm-eval.md) | 评测, RAGAS, G-Eval, LLM-as-Judge | 2026-02-10 |
+| [从"快思考"到"慢思考"：LLM 应用开发的思维转换](./docs/thinking-mode.md) | CoT, ReAct, Agent, 架构设计 | 2026-01-15 |
+
+---
+
+## 🏛️ 中文 LLM 模型生态
+
+基于 [Awesome-Chinese-LLM](https://github.com/HqWu-HITCS/Awesome-Chinese-LLM) 整理：
+
+### 主流底座模型
+
+| 模型 | 厂商 | 参数量 | 上下文 | 可商用 |
+|------|------|--------|--------|--------|
+| ChatGLM | 清华 | 6B/12B | 32K | ✅ |
+| GLM-4 | 清华 | 9B/128B | 128K | ✅ |
+| Qwen2.5 | 阿里 | 7B-72B | 128K | ✅ |
+| Yi | 零一万物 | 6B/34B | 200K | ✅ |
+| DeepSeek-V2 | 深度求索 | 236B | 128K | ✅ |
+| InternLM2 | 上海 AI Lab | 7B/20B | 200K | ✅ |
+| Baichuan2 | 百川 | 7B/13B | 128K | ✅ |
+| MiniMax-Text-01 | MiniMax | 456B | 1M | ✅ |
+
+### 垂直领域模型
+
+| 领域 | 模型 | 说明 |
+|------|------|------|
+| 🏥 医疗 | HuatuoGPT, MedicalGPT, BianQue, Taiyi-LLM | 中医、西医、心理健康 |
+| ⚖️ 法律 | LawGPT, ChatLaw, LexiLaw, DISC-LawLLM | 合同审查、诉讼预测 |
+| 💰 金融 | 轩辕, FinGPT, DISC-FinLLM, Tongyi-Finance | 金融分析、风控 |
+| 📚 教育 | EduChat, QiaoBan, Taoli | 数学辅导、情感陪伴 |
+
+### 微调框架
+
+| 框架 | 说明 |
+|------|------|
+| LLaMA-Factory | 支持 100+ 模型的微调框架 |
+| ChatGLM-Efficient-Tuning | ChatGLM 专用微调工具 |
+| bert4torch | 大模型训练和部署框架 |
+
+### 推理框架
+
+| 框架 | 说明 |
+|------|------|
+| vLLM | PagedAttention 高吞吐推理 |
+| LMDeploy | InternLM 推理优化 |
+| text-generation-inference | HuggingFace 推理服务 |
+| fastllm | 纯 C++ 全平台加速 |
+
+### 评测基准
+
+| 基准 | 说明 |
+|------|------|
+| C-Eval | 52 学科，13948 道题 |
+| FlagEval | 多维度能力评测 |
+| OpenCompass | 一站式评测平台 |
+| SuperCLUE | 中文通用对话评测 |
+| GAOKAO-Bench | 中国高考题目 |
 
 ---
 
@@ -62,11 +149,13 @@
 
 ```
 2024.Q1  从零构建首个 RAG 问答机器人
-2024.Q2  上线多 Agent 协作平台，服务 500+ 用户
-2024.Q3  完成 Qwen-7B/14B 全量微调，PPL 下降 23%
-2024.Q4  生产环境引入 RAGAS 评测系统，召回率提升至 91%
-2025.Q1  基于 llm-action 构建个人 LLM 知识库 Agent
-2025.Q2  开源贡献：优化 LangChain RAG 模板性能 40%
+2024.Q2  引入知识图谱，KG-RAG 完整率提升 35%
+2024.Q3  CrewAI 多 Agent 上线，接入 MCP 协议
+2024.Q4  C-Eval / RAGAS 评测体系落地，召回率 91%
+2025.Q1  基于 ChatGLM/Qwen 构建中文 LLM 微调平台
+2025.Q2  vLLM 部署，QPS 从 20 提升到 120
+2025.Q3  医疗/法律垂直领域 RAG 落地，覆盖 10+ 场景
+2025.Q4  GitHub Actions 评测流水线，PR 自动回归
 ```
 
 ---
@@ -79,4 +168,4 @@
 
 ---
 
-> 💡 这个项目基于 [liguodongiot/llm-action](https://github.com/liguodongiot/llm-action) 全栈知识库构建，遵循其 MIT License。
+> 💡 这个项目基于 [liguodongiot/llm-action](https://github.com/liguodongiot/llm-action) 全栈知识库构建，参考 [Awesome-Chinese-LLM](https://github.com/HqWu-HITCS/Awesome-Chinese-LLM) 整理中文 LLM 模型生态，遵循其 MIT License。

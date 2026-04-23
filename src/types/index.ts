@@ -28,3 +28,27 @@ export interface Skill {
   category: string;
   items: string[];
 }
+
+export interface TimelineEvent {
+  period: string;
+  event: string;
+}
+
+export interface Model {
+  name: string;
+  provider: string;
+  params: string;
+  context: string;
+  commercial: boolean;
+}
+
+export interface Framework {
+  name: string;
+  type: '微调' | '推理' | '应用';
+  description: string;
+}
+
+export interface Evaluation {
+  name: string;
+  scope: string;
+}
